@@ -1,0 +1,306 @@
+#-----------------------------------------------------------------
+Assignment 01
+
+#-----------------------------------------------------------------
+Purpose:
+
+  * Demonstrate working C development environment.
+
+  * Demonstrate ability to write some simple C functions
+      representing the basic transforms.
+
+  * Demonstrate ability to take a screenshot properly.  (No,
+      really;  for some persons, this is harder than it sounds. :)
+
+#-----------------------------------------------------------------
+Background:
+
+  * All the math you need in outlined in the Basic Transforms
+      handout on Canvas.
+
+#-----------------------------------------------------------------
+Tasks:
+
+  1. Download hmwk_01_dalioba.zip from Canvas.
+
+  2. Unzip this file somewhere convenient.
+
+  3. Change 'dalioba' in the name of the directory to YOUR NetID.
+     (Your NetID is three letters followed by four or five digits.
+      The directory name will now be something like
+      'hmwk_01_abc1234' but with YOUR NetID in place of
+      'abc1234'.)
+
+  4. Look in that directory.  There's a Template directory that
+     has some files in it.  Move them up one level into the
+     'hmwk_01_abc1234' directory.
+
+  5. Change the header lines in the file transforms.c.
+
+      -- Line 1:  Family name first, then a comma, then
+                  personal name.
+
+      -- Line 2:  Your NetID.
+
+      -- Line 3:  The date you edited the file, in the format
+                  YYYY-MM-DD (all digits!).
+
+  6. Compile thusly,
+
+    $ make
+    gcc -g -Wall -Wextra -fsanitize=address -fsanitize=leak -static-libasan -o matrixTest matrix.c matrixTest.c
+    gcc -g -Wall -Wextra -fsanitize=address -fsanitize=leak -static-libasan -o transformsTest matrix.c transforms.c transformsTest.c -lm
+    transforms.c: In function ‘rotateXMatrix’:
+    transforms.c:11:29: warning: unused parameter ‘theta’ [-Wunused-parameter]
+     void rotateXMatrix( FLOAT64 theta, Matrix xform )
+                                 ^~~~~
+
+    ...
+
+    transforms.c:43:53: warning: unused parameter ‘xform’ [-Wunused-parameter]
+     void shearZMatrix( FLOAT64 hzx, FLOAT64 hzy, Matrix xform )
+                                                         ^~~~~
+    gcc -g -Wall -Wextra -fsanitize=address -fsanitize=leak -static-libasan -o IDTest matrix.c transforms.c IDTest.c -lm
+    transforms.c: In function ‘rotateXMatrix’:
+    transforms.c:11:29: warning: unused parameter ‘theta’ [-Wunused-parameter]
+     void rotateXMatrix( FLOAT64 theta, Matrix xform )
+                                 ^~~~~
+
+    ...
+
+    transforms.c:43:53: warning: unused parameter ‘xform’ [-Wunused-parameter]
+     void shearZMatrix( FLOAT64 hzx, FLOAT64 hzy, Matrix xform )
+                                                         ^~~~~
+    $
+
+  7. I've edited the output here for length.  You get all those
+      warnings because you haven't yet written the bodies of the
+      seven (7) transforms for which you're responsible.  Don't
+      worry about it at this point.  Instead, run the matrixTest
+      program thusly,
+
+    $ ./matrixTest
+    //-----------------------------------------------------------------
+    //-- p ----------
+                   2
+                   7
+                   1
+                   8
+
+    ...
+
+    //-- m · m ------
+                  43               31               43               44
+                 124              134              102               93
+                 127              103              123               87
+                 134              120              122              132
+
+    //-----------------------------------------------------------------
+    $
+
+  8. I've edited the output here for length.  The complete results
+      are shown in the file Results/matrixTestResults.txt.  Your
+      results should match EXACTLY.  If they don't, STOP RIGHT
+      HERE and figure out what's wrong.  If this doesn't work
+      perfectly, there's no point going any further.
+
+  9. Now edit transforms.c and put the proper code in each of the
+      bodies of the unwritten transforms.  translateMatrix() is
+      already done for you.  Use it as a model.
+
+ 10. After you're done with that, remake and now run thusly,
+
+    $ make clean
+    rm -f *.o matrixTest transformsTest IDTest
+    $ make
+    gcc -g -Wall -Wextra -fsanitize=address -fsanitize=leak -static-libasan -o matrixTest matrix.c matrixTest.c
+    gcc -g -Wall -Wextra -fsanitize=address -fsanitize=leak -static-libasan -o transformsTest matrix.c transforms.c transformsTest.c -lm
+    gcc -g -Wall -Wextra -fsanitize=address -fsanitize=leak -static-libasan -o IDTest matrix.c transforms.c IDTest.c -lm
+    $ ./transformsTest
+    //-----------------------------------------------------------------
+    //-- pX ---------------------
+                   1
+                   0
+                   0
+                   1
+
+    ...
+
+
+    //-- composite·pXYZ ---------
+            -495.716
+             4651.41
+             4386.58
+                   1
+
+    //-----------------------------------------------------------------
+    $
+
+ 11. I've edited the output here for length.  The complete results
+      are shown in the file Results/transformsTestResults.txt.
+      Your results should match EXACTLY.  If they don't, STOP
+      RIGHT HERE and figure out what's wrong.  If this doesn't
+      work perfectly, there's no point going any further.
+
+ 12. Run IDTest thusly,
+
+    $ ./IDTest
+    //-- (rotX 30°)·p1 ----------
+                   2
+             5.56218
+             4.36603
+                   1
+
+    //-- (rotY 45°)·p2 ----------
+             11.3137
+                   2
+         8.88178e-16
+                   1
+
+    //-- (rotZ 60°)·p3 ----------
+             -6.4282
+             4.86603
+                   2
+                   1
+    $
+
+ 13. These sample results for IDTest are shown in the file
+      Results/IDTestResults-sample.txt.  Your results should match
+      EXACTLY.  If they don't, STOP RIGHT HERE and figure out
+      what's wrong.  If this doesn't work perfectly, there's no
+      point going any further.
+
+ 14. Now edit IDTest.c so that it uses the digits from YOUR
+      StudentID instead of the sample digits.  There are
+      instructions in IDTest.c explaining how to do this.  Rerun
+      the IDTest program and take a screenshot of it running with
+      YOUR StudentID digits.  Name your screenshot 'IDTest.png'.
+
+      The screenshot should be similar to that given as a sample
+      in Results/IDTest-sample.png.  Your screenshot will of
+      course show the results using the first nine (9) digits from
+      YOUR StudentID.
+
+      Notice that the sample screenshot is just of the command
+      line window showing the making and running of IDTest.  Do
+      NOT submit a screenshot showing your entire screen.  (I do
+      not need to know what you keep on your desktop.  Ugh! :)
+
+      The screenshot MUST be in PNG (Portable Network Graphics)
+      format.
+
+#-----------------------------------------------------------------
+Submission:
+
+Make a zipfile of your 'hmwk_01_abc1234' directory (with 'abc1234'
+changed to YOUR NetID and with your transforms.c and IDTest.png
+files in it) and submit this zipfile on Canvas as your results for
+this assignment.
+
+All your zipfile should include is a directory with two files in
+it, transforms.c and IDTest.png (did you update the headers
+correctly in transforms.c?).
+
+The image file MUST be in PNG (Portable Network Graphics format)!
+
+Different OSes have a history of mucking with screenshots and file
+formats, so ENSURE that your screenshot is actually a PNG file and
+not some other format.  If your screenshot is not in standard
+Portable Network Graphics format, you get ZERO credit for it, so
+be careful!
+
+Do NOT include any other files in the directory.
+
+#-----------------------------------------------------------------
+Hints:
+  1. Ensure your program compiles and runs correctly.  You should
+     not get ANY warnings or errors when you compile.  ALWAYS
+     compile your code with -Wall and -Wextra and deal with ANY
+     warnings or errors that are identified.  ALWAYS compile your
+     code with -fsanitize=leak and -fsanitize=address and deal
+     with ANY warnings or errors reported.
+
+     Generating warnings or errors, not compiling, not running,
+     core dumping, crashing, going into an infinite loop, getting
+     the wrong answers, getting memory errors ... will earn you
+     ZERO points.
+
+     Ensure your test results match those given in the Results/
+     subdirectory.  Not matching EXACTLY means you are not
+     performing the transformations correctly.  You will not get
+     any credit for malfunctioning transforms.
+
+     ('EXACTLY' means character-by-character the same in the
+      output.  No differences in values.  Use diff to ensure that
+      your output really does match EXACTLY.)
+
+  2. Ensure that you update the three header lines in the source
+     file with YOUR name (family name first, then a comma, then
+     your personal name), YOUR NetID, and the date you edit the
+     file, in the format YYYY-MM-DD (all digits!).
+
+     Not updating the header lines properly will cost you points.
+
+  3. This is not a large assignment.  There are only seven (7)
+      function bodies that have to be written.  They are all in
+      transforms.c and are marked with TODO comments.
+
+        transforms.c:13:  // TODO: Put something here! --> rotateXMatrix()
+        transforms.c:18:  // TODO: Put something here! --> rotateYMatrix()
+        transforms.c:23:  // TODO: Put something here! --> rotateZMatrix()
+        transforms.c:29:  // TODO: Put something here! --> scaleMatrix()
+        transforms.c:35:  // TODO: Put something here! --> shearXMatrix()
+        transforms.c:40:  // TODO: Put something here! --> shearYMatrix()
+        transforms.c:45:  // TODO: Put something here! --> shearZMatrix()
+
+      In the reference solution, the bodies of these functions are
+      only
+
+        rotateXMatrix() --> 7 lines of code
+        rotateYMatrix() --> 7 lines of code
+        rotateZMatrix() --> 7 lines of code
+        scaleMatrix()   --> 4 lines of code
+        shearXMatrix()  --> 3 lines of code
+        shearYMatrix()  --> 3 lines of code
+        shearZMatrix()  --> 3 lines of code
+
+      for a grand total of 34 lines of code.  Easy!
+
+  4. Ensure your submission is packaged EXACTLY as described
+      above.
+
+      -- Your submission should be a ZIP FILE (not a tar, rar, gz,
+         or any other kind of compressed file).
+
+      -- The zip file should be named 'hmwk_01_abc1234.zip' (with
+         'abc1234' replaced with YOUR NetID).
+
+      -- This zip file should have ONE item in it, a directory
+         named 'hmwk_01_abc1234'  (with 'abc1234' replaced with
+         YOUR NetID).
+
+      -- Your files should be in that directory.  The files should
+         be named transforms.c and IDTest.png.  The screenshot
+         should be a standard Portable Network Graphics format
+         file.
+
+     Submissions in the wrong format score ZERO points.
+
+  5. Your transforms.c is going to be tried against another test
+     file when it's evaluated for credit.  You DEFINITELY need to
+     make some test cases of your own to ensure that your
+     transforms are working properly.
+
+  6. After you submit your zip file on Canvas, download it from
+     Canvas into an empty directory, unzip it, and check that your
+     submission is in the proper format, that the program runs and
+     prints the correct output, that you updated the header lines
+     correctly, that your screenshot really is a standard Portable
+     Network Graphics file, that there are only two files in the
+     directory, and so forth.
+
+  7. Are you CERTAIN you complied with all of these nit-picking
+     instructions?  Really?  Maybe you ought to check just one
+     more time. :)
+
+#-----------------------------------------------------------------
